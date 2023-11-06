@@ -28,17 +28,31 @@ const EditProduct = ()=>{
         price :state.price,
         discount :state.discount,
         description :state.description,
-        p_id : state._id
+        p_id : state._id,
+        temp_url    : state.image,
+        pre_path  : state.image
     })
 
 
 
     const onEdit = ()=>{
 
-      console.log(values)
+      console.log("Hello")
+      
+
+      let fd =  new FormData()
+      fd.append('name' ,  values.name)
+      fd.append('p_id' ,  values.p_id)
+      fd.append('price' ,  values.price)
+      fd.append('discount' ,  values.discount)
+      fd.append('category' ,  values.category)
+      fd.append('description' ,  values.description)
+      fd.append('pre_path' ,  values.pre_path)
+      fd.append('img' ,  values.image)
 
 
-      axios.post(Admin_Base_URL + '/edit-products' , values).then((res)=>{
+
+      axios.post(Admin_Base_URL + '/edit-products' , fd).then((res)=>{
         toast.success(res.data.message)
       }).catch((err)=>{
       toast.error(err.response.data.message)
@@ -52,6 +66,15 @@ const EditProduct = ()=>{
     const onChangeInput= (e)=>{
 
      setValues({...values , [e.target.name] :  e.target.value})
+
+    }
+
+    const handleImageChange  = (e )=>{
+
+
+    setValues({...values ,     ['image']  : e.target.files[0]   ,  ['temp_url']  : URL.createObjectURL(e.target.files[0] ) })
+
+
 
     }
 
@@ -86,14 +109,21 @@ const EditProduct = ()=>{
     <label >Product Description</label>
     <textarea type="text" name="description" onChange={onChangeInput} class="form-control" rows={4} value={values.description}  placeholder="Enter Description" />
   </div>
+
+
+  <img src={values.temp_url} style={{width:'200px', height:'200px'}}/>
+
+
   <div class="form-group">
-    <label >Image URL</label>
-    <textarea type="text" name="image" onChange={onChangeInput} class="form-control" rows={4}  value={values.image} placeholder="Enter Image URL" />
+    <label className="btn btn-success"   for="imu"  style={{width  :"200px"}} > Change Product Image</label>
+    <input onChange={handleImageChange} type="file" style={{display:"none"}}  id="imu"  class="form-control"    />
   </div>
 
-  <img src={values.image} style={{width:'200px', height:'200px'}}/>
-
   <button onClick={onEdit} type="submit" class="btn btn-primary">Update Product</button>
+
+      
+
+
 {/* </form> */}
 
 </div>

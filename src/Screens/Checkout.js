@@ -4,9 +4,18 @@ import { useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { User_Base_URL } from "../Config/BaseURL"
+import Lottie from 'react-lottie';
+import * as animationData from '../Assets/order.json'
 
 
-
+const defaultOptions = {
+  loop: true,
+  autoplay: true, 
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+};
 
 
 
@@ -18,20 +27,26 @@ import { User_Base_URL } from "../Config/BaseURL"
 const Checkout =  () =>{
 
 const {state}  = useLocation()
+
 const navigate = useNavigate()
 
 console.log(state)
 
 
-const Processorder = ()=>{
+const [flag ,setflag] =  useState(false)
 
+
+const Processorder = ()=>{
+setflag(true)
 axios.post(User_Base_URL + '/purchase_order' ,  state).then((res)=>{
     toast.success(res.data.message)
+    setflag(false)
     if(res.data.status  == 200)
     {
         navigate('/my-cart')
     }
 }).catch((err)=>{
+  setflag(false)
     toast.error(err.response.data.message)
 })
     
@@ -43,6 +58,7 @@ axios.post(User_Base_URL + '/purchase_order' ,  state).then((res)=>{
 return(
 
     <>
+    {flag == false?
     <div className="container" style={{display : "flex" , justifyContent : "center"}}>
 
     <div class="card" style={{width: '18rem'}}>
@@ -80,6 +96,20 @@ return(
 </div>
 
     </div>
+
+    : 
+
+    <>
+<Lottie options={defaultOptions}
+height={400}
+width={400}
+isStopped={false}
+isPaused={false}/>
+<h5 style={{color  :"red" , textAlign : "center"}}>Please Wait While we are Processing order for You ...</h5>
+
+</>
+
+    }
     </>
 )
 

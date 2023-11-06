@@ -142,6 +142,7 @@ return(
 
 <div style={{width:'80%' , margin : "auto",padding :40}} class="form-inline my-2 my-lg-0">
       <input onChange={onSearch}  value={qu} class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+      <button onClick={()=>navigate('/add-product')}  className="btn btn-success" >Add-Product</button>
     </div>
 <table class="table" style={{width :'95%', margin:"auto"}}>
   <thead>

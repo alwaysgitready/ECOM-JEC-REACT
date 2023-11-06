@@ -24,6 +24,7 @@ import AddAddressForm from '../Screens/Address-Form'
 import BannerComponent from '../Screens/Banner'
 import Checkout from '../Screens/Checkout'
 import AllOrders from '../Screens/AllOrders'
+import Payment from '../Screens/Razor-Pay'
 const HomeComponent  =  lazy(()=>import('../Screens/Home'))
 
 function AllRoutes(){
@@ -61,6 +62,8 @@ return(
     <Route  path='/banners' element={<BannerComponent/>} />
     <Route  path='/checkout' element={<Checkout/>} />
     <Route  path='/allorders' element={<AllOrders/>} />
+    <Route  path='/razorpay' element={<Payment/>} />
+    <Route  path='/verify' element={<Home/>} />
     <Route  path='*' element={<Home/>} />
 
 </Routes>

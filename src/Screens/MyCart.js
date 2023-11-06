@@ -35,6 +35,8 @@ const MyCart  = ()=>{
         const navigate= useNavigate()
 
 const uid = useSelector((state)=> state.LoginReducer.auth._id)
+const email  = useSelector((state)=> state.LoginReducer.auth.email)
+const u_name  = useSelector((state)=> state.LoginReducer.auth.name)
 const add_flag   = useSelector((state)=> state.CartCount.address_flag ?state.CartCount.address_flag :  false )
 
 const checkMyAddress  = ()=>{
@@ -169,6 +171,8 @@ const getMyAddress  = ()=>{
       else{
         let checkoutData  =  {
           uid : uid,
+          name  :  u_name,
+          email : email,
           order_data :  data,
           total_price  : calculateTotal(),
           address_id  : selectedAddressId
